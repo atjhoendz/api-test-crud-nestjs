@@ -13,7 +13,7 @@ export default registerAs(
     host: process.env.POSTGRES_HOST,
 
     synchronize: true,
-    entities: [__dirname + '../entity/*.entity.ts'],
+    entities: [__dirname + '../**/*.entity.ts'],
     autoLoadEntities: true,
     cli: {
       entitiesDir: 'src/entity',
