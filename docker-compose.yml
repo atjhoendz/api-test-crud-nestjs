@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  api_test_crud:
+    container_name: api_test_crud_nestjs
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - app_network
+    depends_on:
+      - db_postgres_crud
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Jakarta
+
+  db_postgres_crud:
+    container_name: db_postgres_crud
+    image: 'postgres'
+    restart: always
+    ports:
+      - 35432:5432
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Jakarta
+    volumes:
+      - db_crud_data:/var/lib/postgresql/data/
+    networks:
+      - app_network
+
+volumes:
+  db_crud_data:
+    name: db_crud_data
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
